@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
-	"golang.org/x/image/colornames"
 )
 
 func run() {
@@ -17,9 +16,13 @@ func run() {
 		panic(err)
 	}
 
+	background := backgroundSprite()
+	backMat := pixel.IM
+	backMat = backMat.Scaled(pixel.ZV, 0.4)
+	backMat = backMat.Moved(win.Bounds().Center().Add(pixel.V(0, 40)))
+	background.Draw(win, backMat)
 	grid := createGrid(pixel.V(150, 50), 10, 50)
 	for !win.Closed() {
-		win.Clear(colornames.Aliceblue)
 		drawGrid(win, grid)
 		win.Update()
 	}
