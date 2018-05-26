@@ -14,8 +14,8 @@ type cell struct {
 
 func emptyCell(pos pixel.Vec, size float64) *cell {
 	return &cell{
-		bounds: pixel.R(pos.X, pos.Y, pos.X + size, pos.Y + size),
-		imdraw: cellImdraw(pos, size, colornames.Darkgreen, 1, pixel.RGB(0, 255, 0).Mul(pixel.Alpha(0.5))),
+		bounds: pixel.R(pos.X, pos.Y, pos.X+size, pos.Y+size),
+		imdraw: cellImdraw(pos, size, colornames.Darkgreen, 1, pixel.RGB(0, 255, 0).Mul(pixel.Alpha(0.005))),
 	}
 }
 
