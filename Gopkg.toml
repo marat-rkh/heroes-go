@@ -31,3 +31,7 @@
   [[prune.project]]
     name = "github.com/go-gl/glfw"
     unused-packages = false
+
+  [[prune.project]]
+    name = "github.com/faiface/pixel"
+    unused-packages = false
