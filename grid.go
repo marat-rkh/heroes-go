@@ -6,21 +6,28 @@ import (
 )
 
 type grid struct {
-	pos pixel.Vec
-	size int
+	pos      pixel.Vec
+	width    int
+	height   int
 	cellSize float64
-	cells [][]*cell
+	cells    [][]*cell
 }
 
-func createGrid(gridPos pixel.Vec, gridSize int, gridCellSize float64) *grid {
-	return &grid{gridPos, gridSize, gridCellSize, createCells(gridPos, gridSize, gridCellSize)}
+func createGrid(pos pixel.Vec, width int, height int, cellSize float64) *grid {
+	return &grid{
+		pos:      pos,
+		width:    width,
+		height:   height,
+		cellSize: cellSize,
+		cells:    createCells(pos, width, height, cellSize),
+	}
 }
 
-func createCells(gridPos pixel.Vec, gridSize int, gridCellSize float64) [][]*cell {
-	cells := make([][]*cell, gridSize)
-	for cx := 0; cx < gridSize; cx++ {
-		cells[cx] = make([]*cell, gridSize)
-		for cy := 0; cy < gridSize; cy++ {
+func createCells(gridPos pixel.Vec, gridWidth int, gridHeight int, gridCellSize float64) [][]*cell {
+	cells := make([][]*cell, gridWidth)
+	for cx := 0; cx < gridWidth; cx++ {
+		cells[cx] = make([]*cell, gridHeight)
+		for cy := 0; cy < gridHeight; cy++ {
 			cellPos := gridPos.Add(pixel.V(float64(cx), float64(cy)).Scaled(gridCellSize))
 			cells[cx][cy] = emptyCell(cellPos, gridCellSize)
 		}
