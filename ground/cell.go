@@ -1,4 +1,4 @@
-package cell
+package ground
 
 import (
 	"github.com/faiface/pixel"
@@ -23,6 +23,13 @@ func HighlightedCell(pos pixel.Vec, size float64) *Cell {
 	return &Cell{
 		Bounds: pixel.R(pos.X, pos.Y, pos.X+size, pos.Y+size),
 		Imdraw: cellImdraw(pos, size, colornames.Darkgreen, 2, pixel.RGB(0, 255, 0).Mul(pixel.Alpha(0.5))),
+	}
+}
+
+func SelectedCell(pos pixel.Vec, size float64) *Cell {
+	return &Cell{
+		Bounds: pixel.R(pos.X, pos.Y, pos.X+size, pos.Y+size),
+		Imdraw: cellImdraw(pos, size, colornames.Darkorange, 2, pixel.RGB(255, 140, 0).Mul(pixel.Alpha(0.5))),
 	}
 }
 

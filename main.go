@@ -4,9 +4,9 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"golang.org/x/image/colornames"
-	"github.com/octomarat/heroes-go/grid"
 	"github.com/octomarat/heroes-go/unit"
 	"github.com/octomarat/heroes-go/util"
+	"github.com/octomarat/heroes-go/ground"
 )
 
 const (
@@ -36,14 +36,14 @@ func run() {
 	backMat = backMat.Scaled(pixel.ZV, 0.4)
 	backMat = backMat.Moved(win.Bounds().Center().Add(pixel.V(0, 40)))
 
-	gr := grid.CreateGrid(gridPos(), gridWidth, gridHeight, cellSize)
+	gr := ground.CreateGrid(gridPos(), gridWidth, gridHeight, cellSize)
 
-	skeleton := unit.NewUnit(`resources/skeleton-small.png`, util.Position{X: 0, Y: 5}, gr)
+	skeleton := unit.NewUnit(`resources/skeleton-35x42.png`, util.Position{X: 0, Y: 5}, false, gr)
 
 	for !win.Closed() {
 		win.Clear(colornames.Green)
 		background.Draw(win, backMat)
-		grid.DrawGrid(win, gr)
+		ground.DrawGrid(win, gr)
 		skeleton.Draw(win)
 		win.Update()
 	}
