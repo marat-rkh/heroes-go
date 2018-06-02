@@ -3,6 +3,7 @@ package ground
 import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
+	"github.com/octomarat/heroes-go/util"
 )
 
 type Grid struct {
@@ -50,4 +51,16 @@ func DrawGrid(window *pixelgl.Window, grid *Grid) {
 	if highlighted != nil {
 		HighlightedCell(highlighted.Bounds.Min, highlighted.Bounds.W()).Imdraw.Draw(window)
 	}
+}
+
+func (g *Grid) CellPosition(mousePos pixel.Vec) *util.Position {
+	// TODO optimize
+	for x, column := range g.Cells {
+		for y, cell_ := range column {
+			if cell_.Bounds.Contains(mousePos) {
+				return &util.Position{X: uint8(x), Y: uint8(y)}
+			}
+		}
+	}
+	return nil
 }

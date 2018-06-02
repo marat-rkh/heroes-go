@@ -1,4 +1,4 @@
-package unit
+package units
 
 import (
 	"github.com/faiface/pixel"
@@ -37,7 +37,19 @@ func NewUnit(spritePath string, gridPos util.Position, isLarge bool, grid *groun
 	}
 }
 
-func (u *Unit) Draw(window *pixelgl.Window) {
-	u.cell.Imdraw.Draw(window)
+func (u *Unit) Draw(window *pixelgl.Window, selected bool) {
+	if selected {
+		u.cell.Imdraw.Draw(window)
+	}
 	u.sprite.Draw(window, pixel.IM.Moved(u.screenPos))
+}
+
+func (u *Unit) IsAtPosition(position util.Position) bool {
+	if position == u.gridPos {
+		return true
+	}
+	if u.isLarge {
+
+	}
+	return false
 }

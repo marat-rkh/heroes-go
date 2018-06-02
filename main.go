@@ -4,9 +4,10 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"golang.org/x/image/colornames"
-	"github.com/octomarat/heroes-go/unit"
+	"github.com/octomarat/heroes-go/units"
 	"github.com/octomarat/heroes-go/util"
 	"github.com/octomarat/heroes-go/ground"
+	"github.com/octomarat/heroes-go/game"
 )
 
 const (
@@ -38,13 +39,33 @@ func run() {
 
 	gr := ground.CreateGrid(gridPos(), gridWidth, gridHeight, cellSize)
 
-	skeleton := unit.NewUnit(`resources/skeleton-35x42.png`, util.Position{X: 0, Y: 5}, false, gr)
+	skeleton := units.NewUnit(`resources/skeleton-35x42.png`, util.Position{X: 0, Y: 5}, false, gr)
+
+	gameState := &game.State{}
 
 	for !win.Closed() {
 		win.Clear(colornames.Green)
 		background.Draw(win, backMat)
 		ground.DrawGrid(win, gr)
-		skeleton.Draw(win)
+
+		var selectedPos *util.Position = nil
+		if win.JustPressed(pixelgl.MouseButtonLeft) {
+			mousePosition := win.MousePosition()
+			selectedPos = gr.CellPosition(mousePosition)
+		}
+		selected := false
+		if gameState.IsSelected(skeleton) {
+			selected = selectedPos == nil || skeleton.IsAtPosition(*selectedPos)
+		} else {
+			selected = selectedPos != nil && skeleton.IsAtPosition(*selectedPos)
+		}
+		skeleton.Draw(win, selected)
+		if selected {
+			gameState.SetSelectedUnit(skeleton)
+		} else {
+			gameState.SetSelectedUnit(nil)
+		}
+
 		win.Update()
 	}
 }
